@@ -8,7 +8,7 @@ enum QRErrorCorrectionLevel {
   QUALITY = "Q",
   HIGH = "H",
 }
-
+// TODO: add different qr code types, like phone number, wifi, etc.
 const Home: NextPage = () => {
   const [qrValue, setQrValue] = useState("Hello, World!");
   const [qrSize, setQrSize] = useState(256);
@@ -83,17 +83,17 @@ const Home: NextPage = () => {
           className="w-32 p-2 border-2 border-gray-600"
           // Make the QR code downloadable as a PNG. Support SSR
           href={
-            typeof document !== "undefined" ? (
-              (document.getElementById("qr-code")! as HTMLCanvasElement).toDataURL("image/png")
-            ) : (
-              ""
-            )
-          }
+            typeof document !== "undefined"
+              ? (
+                  document.getElementById("qr-code")! as HTMLCanvasElement
+                ).toDataURL("image/png")
+              : ""
+          }   
           download="qr-code.png"
         >
           Download as PNG
         </a>
-        </div>
+      </div>
     </div>
   );
 };
