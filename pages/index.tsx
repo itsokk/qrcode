@@ -21,8 +21,11 @@ const Home: NextPage = () => {
     <div className="text-center w-screen">
       <Head>
         <title>QR Code Generator</title>
-        <link rel="icon" href="/favicon.ico" /> 
+        <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="QR Code Generator" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png" />
       </Head>
       <h1 className="text-3xl font-bold mt-2">QR Code Generator</h1>
       <div className="mt-4 inputWrapper">
@@ -92,14 +95,14 @@ const Home: NextPage = () => {
       <div className="mt-8">
         <a
           className="w-32 p-2 border-2 border-gray-600"
-          // Make the QR code downloadable as a PNG. Support SSR
+          // Make the QR code downloadable as a PNG.
           href={
             typeof document !== "undefined"
               ? (
                   document.getElementById("qr-code")! as HTMLCanvasElement
                 ).toDataURL("image/png")
               : ""
-          }   
+          }
           download="qr-code.png"
         >
           Download as PNG
