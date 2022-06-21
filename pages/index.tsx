@@ -81,8 +81,13 @@ const Home: NextPage = () => {
       <div className="mt-8">
         <a
           className="w-32 p-2 border-2 border-gray-600"
+          // Make the QR code downloadable as a PNG. Support SSR
           href={
-            (document.getElementById("qr-code")! as HTMLCanvasElement).toDataURL("image/png")
+            typeof document !== "undefined" ? (
+              (document.getElementById("qr-code")! as HTMLCanvasElement).toDataURL("image/png")
+            ) : (
+              ""
+            )
           }
           download="qr-code.png"
         >
