@@ -22,32 +22,36 @@ const Home: NextPage = () => {
       <Head>
         <title>QR Code Generator</title>
         <link rel="icon" href="/favicon.ico" /> 
+        <meta name="description" content="QR Code Generator" />
       </Head>
       <h1 className="text-3xl font-bold mt-2">QR Code Generator</h1>
       <div className="mt-4 inputWrapper">
-        <label>Text</label>
+        <label htmlFor="qrValue">Text</label>
         <input
           className="w-1/2 p-2 border-2 border-gray-600"
           type="text"
           value={qrValue}
           onChange={(e) => setQrValue(e.target.value)}
+          id="qrValue"
         />
       </div>
       <div className="mt-2 inputWrapper">
-        <label>Size</label>
+        <label htmlFor="qrSize">Size</label>
         <input
           className="w-32 p-2 border-2 border-gray-600"
           type="number"
           value={qrSize}
           onChange={(e) => setQrSize(Number(e.target.value))}
+          id="qrSize"
         />
       </div>
       <div className="mt-4 inputWrapper">
-        <label>Error Correction</label>
+        <label htmlFor="qrError">Error Correction</label>
         <select
           className="w-32 p-2 border-2 border-gray-600"
           value={qrError}
           onChange={(e) => setQrError(e.target.value as QRErrorCorrectionLevel)}
+          id="qrError"
         >
           <option value={QRErrorCorrectionLevel.LOW}>Low</option>
           <option value={QRErrorCorrectionLevel.MEDIUM}>Medium</option>
@@ -56,21 +60,23 @@ const Home: NextPage = () => {
         </select>
       </div>
       <div className="mt-4 inputWrapper">
-        <label>Background Color</label>
+        <label htmlFor="bgColor">Background Color</label>
         <input
           className="h-8 p-2 border-2 border-gray-600"
           type="color"
           value={bgColor}
           onChange={(e) => setBgColor(e.target.value)}
+          id="bgColor"
         />
       </div>
       <div className="mt-4 inputWrapper">
-        <label>Foreground Color</label>
+        <label htmlFor="fgColor">Foreground Color</label>
         <input
           className="h-8 p-2 border-2 border-gray-600"
           type="color"
           value={fgColor}
           onChange={(e) => setFgColor(e.target.value)}
+          id="fgColor"
         />
       </div>
       <QRCodeCanvas
