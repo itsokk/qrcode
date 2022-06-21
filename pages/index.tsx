@@ -1,13 +1,44 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { QRCodeCanvas } from "qrcode.react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import TextType from "../components/qr/TextType";
+import URLType from "../components/qr/URLType";
+import MailType from "../components/qr/MailType";
+import SMSType from "../components/qr/SMSType";
 
 enum QRErrorCorrectionLevel {
   LOW = "L",
   MEDIUM = "M",
   QUALITY = "Q",
   HIGH = "H",
+}
+
+enum QRTypes {
+  TEXT = "text",
+  URL = "url",
+  EMAIL = "email",
+  PHONE = "phone",
+  SMS = "sms",
+  CONTACT = "contact",
+  LOCATION = "location",
+  WIFI = "wifi",
+  CALENDAR = "calendar",
+}
+
+function conditionalRender(type: QRTypes, qrValue: string, setQRValue: (value: string) => void) {
+  switch (type) {
+    case QRTypes.TEXT:
+      return <TextType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.URL:
+      return <URLType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.EMAIL:
+      return <MailType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.SMS:
+      return <SMSType qrValue={qrValue} setQRValue={setQRValue} />;
+    default:
+      return null;
+  }
 }
 // TODO: add different qr code types, like phone number, wifi, etc.
 const Home: NextPage = () => {
@@ -16,7 +47,7 @@ const Home: NextPage = () => {
   const [qrError, setQrError] = useState(QRErrorCorrectionLevel.MEDIUM);
   const [bgColor, setBgColor] = useState("#ffffff");
   const [fgColor, setFgColor] = useState("#000000");
-
+  const [qrType, setQrType] = useState(QRTypes.TEXT);
   return (
     <div className="text-center w-screen">
       <Head>
@@ -28,16 +59,25 @@ const Home: NextPage = () => {
         <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png" />
       </Head>
       <h1 className="text-3xl font-bold mt-2">QR Code Generator</h1>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue">Text</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={qrValue}
-          onChange={(e) => setQrValue(e.target.value)}
-          id="qrValue"
-        />
+      <div className="flex flex-col items-center text-center">
+        <label htmlFor="qr-type">Type</label>
+        <select
+          className="block w-32 mt-4"
+          value={qrType}
+          onChange={(e) => setQrType(e.target.value as QRTypes)}
+        >
+          <option value={QRTypes.TEXT}>Text</option>
+          <option value={QRTypes.URL}>URL</option>
+          <option value={QRTypes.EMAIL}>Email</option>
+          <option value={QRTypes.PHONE}>Phone</option>
+          <option value={QRTypes.SMS}>SMS</option>
+          <option value={QRTypes.CONTACT}>Contact</option>
+          <option value={QRTypes.LOCATION}>Location</option>
+          <option value={QRTypes.WIFI}>WiFi</option>
+          <option value={QRTypes.CALENDAR}>Calendar</option>
+        </select>
       </div>
+      {conditionalRender(qrType, qrValue, setQrValue)}
       <div className="mt-2 inputWrapper">
         <label htmlFor="qrSize">Size</label>
         <input
