@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import { QRCodeCanvas } from "qrcode.react";
 import { useState } from "react";
 
@@ -18,9 +19,13 @@ const Home: NextPage = () => {
 
   return (
     <div className="text-center w-screen">
+      <Head>
+        <title>QR Code Generator</title>
+        <link rel="icon" href="/favicon.ico" /> 
+      </Head>
       <h1 className="text-3xl font-bold mt-2">QR Code Generator</h1>
-      <div className="mt-4">
-        <p>Text</p>
+      <div className="mt-4 inputWrapper">
+        <label>Text</label>
         <input
           className="w-1/2 p-2 border-2 border-gray-600"
           type="text"
@@ -28,8 +33,8 @@ const Home: NextPage = () => {
           onChange={(e) => setQrValue(e.target.value)}
         />
       </div>
-      <div className="mt-4">
-        <p>Size</p>
+      <div className="mt-2 inputWrapper">
+        <label>Size</label>
         <input
           className="w-32 p-2 border-2 border-gray-600"
           type="number"
@@ -37,8 +42,8 @@ const Home: NextPage = () => {
           onChange={(e) => setQrSize(Number(e.target.value))}
         />
       </div>
-      <div className="mt-4">
-        <p>Error Correction</p>
+      <div className="mt-4 inputWrapper">
+        <label>Error Correction</label>
         <select
           className="w-32 p-2 border-2 border-gray-600"
           value={qrError}
@@ -50,8 +55,8 @@ const Home: NextPage = () => {
           <option value={QRErrorCorrectionLevel.HIGH}>High</option>
         </select>
       </div>
-      <div className="mt-4">
-        <p>Background Color</p>
+      <div className="mt-4 inputWrapper">
+        <label>Background Color</label>
         <input
           className="h-8 p-2 border-2 border-gray-600"
           type="color"
@@ -59,8 +64,8 @@ const Home: NextPage = () => {
           onChange={(e) => setBgColor(e.target.value)}
         />
       </div>
-      <div className="mt-4">
-        <p>Foreground Color</p>
+      <div className="mt-4 inputWrapper">
+        <label>Foreground Color</label>
         <input
           className="h-8 p-2 border-2 border-gray-600"
           type="color"
