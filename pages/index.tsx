@@ -6,6 +6,10 @@ import TextType from "../components/qr/TextType";
 import URLType from "../components/qr/URLType";
 import MailType from "../components/qr/MailType";
 import SMSType from "../components/qr/SMSType";
+import PhoneType from "../components/qr/PhoneType";
+import WiFiType from "../components/qr/WiFiType";
+import LocType from "../components/qr/LocType";
+import ContactType from "../components/qr/ContactType";
 
 enum QRErrorCorrectionLevel {
   LOW = "L",
@@ -15,15 +19,14 @@ enum QRErrorCorrectionLevel {
 }
 
 enum QRTypes {
-  TEXT = "text",
-  URL = "url",
-  EMAIL = "email",
-  PHONE = "phone",
-  SMS = "sms",
-  CONTACT = "contact",
-  LOCATION = "location",
-  WIFI = "wifi",
-  CALENDAR = "calendar",
+  TEXT = "text", // Done
+  URL = "url", // Done
+  EMAIL = "email", // Done
+  PHONE = "phone", // Done
+  SMS = "sms", // Done
+  CONTACT = "contact", // Done
+  LOCATION = "location", // Done
+  WIFI = "wifi", // Done
 }
 
 function conditionalRender(type: QRTypes, qrValue: string, setQRValue: (value: string) => void) {
@@ -36,6 +39,14 @@ function conditionalRender(type: QRTypes, qrValue: string, setQRValue: (value: s
       return <MailType qrValue={qrValue} setQRValue={setQRValue} />;
     case QRTypes.SMS:
       return <SMSType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.PHONE:
+      return <PhoneType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.WIFI:
+      return <WiFiType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.LOCATION:
+      return <LocType qrValue={qrValue} setQRValue={setQRValue} />;
+    case QRTypes.CONTACT:
+      return <ContactType qrValue={qrValue} setQRValue={setQRValue} />;
     default:
       return null;
   }
@@ -48,6 +59,9 @@ const Home: NextPage = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const [fgColor, setFgColor] = useState("#000000");
   const [qrType, setQrType] = useState(QRTypes.TEXT);
+  useEffect(() => {
+    setQrValue(``);
+  }, [qrType]);
   return (
     <div className="text-center w-screen">
       <Head>
@@ -74,7 +88,6 @@ const Home: NextPage = () => {
           <option value={QRTypes.CONTACT}>Contact</option>
           <option value={QRTypes.LOCATION}>Location</option>
           <option value={QRTypes.WIFI}>WiFi</option>
-          <option value={QRTypes.CALENDAR}>Calendar</option>
         </select>
       </div>
       {conditionalRender(qrType, qrValue, setQrValue)}
