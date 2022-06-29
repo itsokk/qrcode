@@ -1,3 +1,4 @@
+import { Center, TextInput, Textarea } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 const SMS = (props: {
@@ -10,27 +11,24 @@ const SMS = (props: {
     props.setQRValue(`SMSTO:${phone}:${message}`);
   }, [phone, message]);
   return (
-    <div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-NTO">Number to:</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          id="qrValue-NTO"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-Message">Message:</label>
-        <textarea
-          className="w-1/2 p-2 border-2 border-gray-600"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          id="qrValue-Message"
-        />
-      </div>
-    </div>
+    <Center style={{ flexDirection: "column" }}>
+      <TextInput
+        value={phone}
+        onChange={(e) => setPhone(e.currentTarget.value)}
+        placeholder="Phone"
+        label="Phone"
+        style={{ width: "25%" }}
+      />
+      <Textarea
+        value={message}
+        onChange={(e) => setMessage(e.currentTarget.value)}
+        placeholder="Message"
+        label="Message"
+        style={{ width: "50%" }}
+        autosize
+        minRows={4}
+      />
+    </Center>
   );
 };
 

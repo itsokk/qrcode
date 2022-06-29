@@ -1,3 +1,4 @@
+import { Center, TextInput, Select, Checkbox } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 enum SECURITY {
@@ -22,52 +23,40 @@ const WiFi = (props: {
     security === SECURITY.NONE && setPassword("");
   }, [security]);
   return (
-    <div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-SSID">SSID:</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={ssid}
-          onChange={(e) => setSsid(e.target.value)}
-          id="qrValue-SSID"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-PASSWORD">Password:</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          id="qrValue-PASSWORD"
-          disabled={security === SECURITY.NONE}
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-SECURITY">Security:</label>
-        <select
-          className="w-1/2 p-2 border-2 border-gray-600"
-          value={security}
-          onChange={(e) => setSecurity(e.target.value as SECURITY)}
-          id="qrValue-SECURITY"
-        >
-          <option value={SECURITY.WPA}>WPA</option>
-          <option value={SECURITY.WEP}>WEP</option>
-          <option value={SECURITY.NONE}>NONE</option>
-        </select>
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-HIDDEN">Hidden:</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="checkbox"
-          checked={hidden}
-          onChange={(e) => setHidden(e.target.checked)}
-          id="qrValue-HIDDEN"
-        />
-      </div>
-    </div>
+    <Center style={{ flexDirection: "column" }}>
+      <TextInput
+        value={ssid}
+        onChange={(e) => setSsid(e.currentTarget.value)}
+        placeholder="SSID"
+        label="SSID"
+        style={{ width: "55%" }}
+      />
+      <TextInput
+        value={password}
+        onChange={(e) => setPassword(e.currentTarget.value)}
+        placeholder="Password"
+        label="Password"
+        style={{ width: "55%" }}
+        disabled={security === SECURITY.NONE}
+      />
+      <Select
+        value={security}
+        onChange={(e) => setSecurity(e as SECURITY)}
+        data={[
+          { value: SECURITY.WPA, label: "WPA" },
+          { value: SECURITY.WEP, label: "WEP" },
+          { value: SECURITY.NONE, label: "NONE" },
+        ]}
+        label="Security"
+        style={{ width: "55%" }}
+      />
+      <Checkbox
+        value={hidden ? "true" : "false"}
+        onChange={(e) => setHidden(e.currentTarget.checked)}
+        label="Hidden"
+        style={{ width: "55%", marginTop: "0.35rem" }}
+      />
+    </Center>
   );
 };
 

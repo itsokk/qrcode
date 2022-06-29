@@ -1,3 +1,4 @@
+import { Button, Center, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 const LOC = (props: {
@@ -13,47 +14,45 @@ const LOC = (props: {
   }, [lat, lon, alt]);
 
   return (
-    <div>
-        <div className="mt-4 inputWrapper">
-            <button className="w-1/2 p-2 border-2 border-gray-600 bg-gray-300" onClick={() => navigator != null && navigator.geolocation.getCurrentPosition(({ coords }) => {
-                setLat(coords.latitude.toString());
-                setLon(coords.longitude.toString());
-                // Set altitude to 0 if not available
-                setAlt(coords.altitude ? coords.altitude.toString() : "0");
-            }
-            )}>Get Current Location</button>
-        </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-LAT">Latitude</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={lat}
-          onChange={(e) => setLat(e.target.value)}
-          id="qrValue-LAT"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-LON">Longitude</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={lon}
-          onChange={(e) => setLon(e.target.value)}
-          id="qrValue-LON"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrValue-ALT">Altitude</label>
-        <input
-          className="w-1/2 p-2 border-2 border-gray-600"
-          type="text"
-          value={alt}
-          onChange={(e) => setAlt(e.target.value)}
-          id="qrValue-ALT"
-        />
-      </div>
-    </div>
+    <Center style={{ flexDirection: "column" }}>
+      <Button
+        onClick={() =>
+          navigator != null &&
+          navigator.geolocation.getCurrentPosition(({ coords }) => {
+            setLat(coords.latitude.toString());
+            setLon(coords.longitude.toString());
+            // Set altitude to 0 if not available
+            setAlt(coords.altitude ? coords.altitude.toString() : "0");
+          })
+        }
+        size="lg"
+        color="violet"
+        style={{ marginTop: "1rem" }}
+      >
+        Get location
+      </Button>
+      <TextInput
+        value={lat}
+        onChange={(e) => setLat(e.currentTarget.value)}
+        placeholder="Latitude"
+        label="Latitude"
+        style={{ width: "25%" }}
+      />
+      <TextInput
+        value={lon}
+        onChange={(e) => setLon(e.currentTarget.value)}
+        placeholder="Longitude"
+        label="Longitude"
+        style={{ width: "25%" }}
+      />
+      <TextInput
+        value={alt}
+        onChange={(e) => setAlt(e.currentTarget.value)}
+        placeholder="Altitude"
+        label="Altitude"
+        style={{ width: "25%" }}
+      />
+    </Center>
   );
 };
 

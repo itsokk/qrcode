@@ -1,18 +1,28 @@
+import { Center, TextInput } from "@mantine/core";
+import { useState, useEffect } from "react";
+
 const URL = (props: {
   setQRValue: (value: string) => void;
   qrValue: string;
 }) => {
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    // Add http:// if not present
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      setUrl("http://" + url);
+    }
+    props.setQRValue(url);
+  }, [url]);
   return (
-    <div className="mt-4 inputWrapper">
-      <label htmlFor="qrValue-URL">URL</label>
-      <input
-        className="w-1/2 p-2 border-2 border-gray-600"
-        type="text"
+    <Center style={{ flexDirection: "column" }}>
+      <TextInput
         value={props.qrValue}
-        onChange={(e) => props.setQRValue(e.target.value)}
-        id="qrValue-URL"
+        onChange={(e) => props.setQRValue(e.currentTarget.value)}
+        placeholder="URL"
+        label="URL"
+        style={{ width: "55%" }}
       />
-    </div>
+    </Center>
   );
 };
 

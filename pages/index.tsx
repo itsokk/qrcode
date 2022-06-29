@@ -10,6 +10,16 @@ import PhoneType from "../components/qr/PhoneType";
 import WiFiType from "../components/qr/WiFiType";
 import LocType from "../components/qr/LocType";
 import ContactType from "../components/qr/ContactType";
+import {
+  NumberInput,
+  Select,
+  ColorPicker,
+  InputWrapper,
+  Button,
+  Title,
+  Center,
+} from "@mantine/core";
+import { Download, FaceIdError, Qrcode, Resize } from "tabler-icons-react";
 
 enum QRErrorCorrectionLevel {
   LOW = "L",
@@ -29,7 +39,11 @@ enum QRTypes {
   WIFI = "wifi", // Done
 }
 
-function conditionalRender(type: QRTypes, qrValue: string, setQRValue: (value: string) => void) {
+function conditionalRender(
+  type: QRTypes,
+  qrValue: string,
+  setQRValue: (value: string) => void
+) {
   switch (type) {
     case QRTypes.TEXT:
       return <TextType qrValue={qrValue} setQRValue={setQRValue} />;
@@ -63,7 +77,7 @@ const Home: NextPage = () => {
     setQrValue(``);
   }, [qrType]);
   return (
-    <div className="text-center w-screen">
+    <div>
       <Head>
         <title>QR Code Generator</title>
         <link rel="icon" href="/favicon.ico" />
@@ -72,83 +86,94 @@ const Home: NextPage = () => {
         <meta name="theme-color" content="#ffffff" />
         <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png" />
       </Head>
-      <h1 className="text-3xl font-bold mt-2">QR Code Generator</h1>
-      <div className="flex flex-col items-center text-center">
-        <label htmlFor="qr-type">Type</label>
-        <select
-          className="block w-32 mt-4"
-          value={qrType}
-          onChange={(e) => setQrType(e.target.value as QRTypes)}
-        >
-          <option value={QRTypes.TEXT}>Text</option>
-          <option value={QRTypes.URL}>URL</option>
-          <option value={QRTypes.EMAIL}>Email</option>
-          <option value={QRTypes.PHONE}>Phone</option>
-          <option value={QRTypes.SMS}>SMS</option>
-          <option value={QRTypes.CONTACT}>Contact</option>
-          <option value={QRTypes.LOCATION}>Location</option>
-          <option value={QRTypes.WIFI}>WiFi</option>
-        </select>
-      </div>
-      {conditionalRender(qrType, qrValue, setQrValue)}
-      <div className="mt-2 inputWrapper">
-        <label htmlFor="qrSize">Size</label>
-        <input
-          className="w-32 p-2 border-2 border-gray-600"
-          type="number"
-          value={qrSize}
-          onChange={(e) => setQrSize(Number(e.target.value))}
-          id="qrSize"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="qrError">Error Correction</label>
-        <select
-          className="w-32 p-2 border-2 border-gray-600"
-          value={qrError}
-          onChange={(e) => setQrError(e.target.value as QRErrorCorrectionLevel)}
-          id="qrError"
-        >
-          <option value={QRErrorCorrectionLevel.LOW}>Low</option>
-          <option value={QRErrorCorrectionLevel.MEDIUM}>Medium</option>
-          <option value={QRErrorCorrectionLevel.QUALITY}>Quality</option>
-          <option value={QRErrorCorrectionLevel.HIGH}>High</option>
-        </select>
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="bgColor">Background Color</label>
-        <input
-          className="h-8 p-2 border-2 border-gray-600"
-          type="color"
-          value={bgColor}
-          onChange={(e) => setBgColor(e.target.value)}
-          id="bgColor"
-        />
-      </div>
-      <div className="mt-4 inputWrapper">
-        <label htmlFor="fgColor">Foreground Color</label>
-        <input
-          className="h-8 p-2 border-2 border-gray-600"
-          type="color"
-          value={fgColor}
-          onChange={(e) => setFgColor(e.target.value)}
-          id="fgColor"
-        />
-      </div>
-      <QRCodeCanvas
-        value={qrValue}
-        size={qrSize}
-        level={qrError}
-        bgColor={bgColor}
-        fgColor={fgColor}
-        className="m-auto mt-8"
-        id="qr-code"
+      <Title order={1} align="center">
+        QR Code Generator
+      </Title>
+      <Select
+        value={qrType}
+        onChange={(e) => setQrType(e as QRTypes)}
+        data={[
+          { value: QRTypes.TEXT, label: "Text" },
+          { value: QRTypes.URL, label: "URL" },
+          { value: QRTypes.EMAIL, label: "Email" },
+          { value: QRTypes.SMS, label: "SMS" },
+          { value: QRTypes.PHONE, label: "Phone" },
+          { value: QRTypes.WIFI, label: "WiFi" },
+          { value: QRTypes.LOCATION, label: "Location" },
+          { value: QRTypes.CONTACT, label: "Contact" },
+        ]}
+        style={{ width: "20%", margin: "auto", marginTop: "0.5rem" }}
+        label="QR Type"
+        icon={<Qrcode size={18} strokeWidth={2}/>}
       />
+      {conditionalRender(qrType, qrValue, setQrValue)}
+      <NumberInput
+        value={qrSize}
+        onChange={(value) => setQrSize(value!)}
+        placeholder="Output size"
+        label="Output size"
+        style={{ width: "20%", margin: "auto" }}
+        icon={<Resize size={18} strokeWidth={2} />}
+      />
+      <Select
+        value={qrError}
+        onChange={(value) => setQrError(value as QRErrorCorrectionLevel)}
+        placeholder="Error correction"
+        label="Error correction"
+        style={{ width: "33.33%", margin: "auto" }}
+        data={[
+          { value: QRErrorCorrectionLevel.LOW, label: "Low" },
+          { value: QRErrorCorrectionLevel.MEDIUM, label: "Medium" },
+          { value: QRErrorCorrectionLevel.QUALITY, label: "Quality" },
+          { value: QRErrorCorrectionLevel.HIGH, label: "High" },
+        ]}
+        icon={<FaceIdError size={18} strokeWidth={2} />}
+      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+          marginTop: "1rem",
+        }}
+      >
+        <InputWrapper
+          label="Background color"
+          style={{
+            marginRight: "4rem",
+          }}
+        >
+          <ColorPicker
+            value={bgColor}
+            onChange={(value) => setBgColor(value)}
+            placeholder="Background color"
+          />
+        </InputWrapper>
+        <InputWrapper label="Foreground color" style={{ marginLeft: "4rem" }}>
+          <ColorPicker
+            value={fgColor}
+            onChange={(value) => setFgColor(value)}
+            placeholder="Foreground color"
+          />
+        </InputWrapper>
+      </div>
+      <Center style={{ marginTop: "2rem" }}>
+        <QRCodeCanvas
+          value={qrValue}
+          size={qrSize}
+          level={qrError}
+          bgColor={bgColor}
+          fgColor={fgColor}
+          id="qr-code"
+        />
+      </Center>
       {/* Download button */}
-      <div className="mt-8">
-        <a
-          className="w-32 p-2 border-2 border-gray-600"
-          // Make the QR code downloadable as a PNG.
+      <Center style={{ marginTop: "2rem" }}>
+        <Button
+          color="indigo"
+          size="md"
+          component="a"
+          download="qr-code.png"
           href={
             typeof document !== "undefined"
               ? (
@@ -156,11 +181,11 @@ const Home: NextPage = () => {
                 ).toDataURL("image/png")
               : ""
           }
-          download="qr-code.png"
+          leftIcon={<Download size={18} strokeWidth={2} />}
         >
           Download as PNG
-        </a>
-      </div>
+        </Button>
+      </Center>
     </div>
   );
 };
