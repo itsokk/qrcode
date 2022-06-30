@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { QRCodeCanvas } from "qrcode.react";
+import { QRCode } from "react-qrcode-logo";
 import { useEffect, useState } from "react";
 import TextType from "../components/qr/TextType";
 import URLType from "../components/qr/URLType";
@@ -19,6 +19,7 @@ import {
   Title,
   Center,
   createStyles,
+  Checkbox,
 } from "@mantine/core";
 import { Download, FaceIdError, Qrcode, Resize } from "tabler-icons-react";
 
@@ -38,6 +39,11 @@ enum QRTypes {
   CONTACT = "contact", // Done
   LOCATION = "location", // Done
   WIFI = "wifi", // Done
+}
+
+enum QRStyle {
+  SQUARES = "squares",
+  DOTS = "dots",
 }
 
 function conditionalRender(
@@ -69,25 +75,24 @@ function conditionalRender(
 
 const styles = createStyles((theme) => ({
   colorContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: '0.25rem',
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginTop: "0.25rem",
 
-    '@media (max-width: 440px)': {
-      flexDirection: 'column'
-    }
+    "@media (max-width: 440px)": {
+      flexDirection: "column",
+    },
   },
   colorWrapper: {
-    marginRight: '2rem',
-    marginLeft: '2rem',
+    marginRight: "2rem",
+    marginLeft: "2rem",
 
     [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      margin: 'auto'
-    }
-  }
-})
-)
+      margin: "auto",
+    },
+  },
+}));
 
 const Home: NextPage = () => {
   const [qrValue, setQrValue] = useState("Hello, World!");
@@ -96,10 +101,17 @@ const Home: NextPage = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const [fgColor, setFgColor] = useState("#000000");
   const [qrType, setQrType] = useState(QRTypes.TEXT);
+  const [qrStyle, setQrStyle] = useState(QRStyle.SQUARES);
+  const [qrLogoEnabled, setQrLogoEnabled] = useState(false);
+  const [qrLogoImage, setQrLogoImage] = useState(""); // Base64 string
+  const [qrLogoSize, setQrLogoSize] = useState(0);
+  const [qrLogoOpacity, setQrLogoOpacity] = useState(0); // 0-1
+  const [qrLogoRemoveBehind, setQrLogoRemoveBehind] = useState(false);
+
   useEffect(() => {
     setQrValue(``);
   }, [qrType]);
-  const { classes } = styles()
+  const { classes } = styles();
   return (
     <div>
       <Head>
@@ -113,23 +125,39 @@ const Home: NextPage = () => {
       <Title order={1} align="center">
         QR Code Generator
       </Title>
-      <Select
-        value={qrType}
-        onChange={(e) => setQrType(e as QRTypes)}
-        data={[
-          { value: QRTypes.TEXT, label: "Text" },
-          { value: QRTypes.URL, label: "URL" },
-          { value: QRTypes.EMAIL, label: "Email" },
-          { value: QRTypes.SMS, label: "SMS" },
-          { value: QRTypes.PHONE, label: "Phone" },
-          { value: QRTypes.WIFI, label: "WiFi" },
-          { value: QRTypes.LOCATION, label: "Location" },
-          { value: QRTypes.CONTACT, label: "Contact" },
-        ]}
-        style={{ width: "10rem", margin: "auto", marginTop: "0.5rem" }}
-        label="QR Type"
-        icon={<Qrcode size={18} strokeWidth={2}/>}
-      />
+      <Center
+        style={{ marginTop: "0.25rem", display: "flex", flexDirection: "row" }}
+      >
+        <Select
+          value={qrType}
+          onChange={(e) => setQrType(e as QRTypes)}
+          data={[
+            { value: QRTypes.TEXT, label: "Text" },
+            { value: QRTypes.URL, label: "URL" },
+            { value: QRTypes.EMAIL, label: "Email" },
+            { value: QRTypes.SMS, label: "SMS" },
+            { value: QRTypes.PHONE, label: "Phone" },
+            { value: QRTypes.WIFI, label: "WiFi" },
+            { value: QRTypes.LOCATION, label: "Location" },
+            { value: QRTypes.CONTACT, label: "Contact" },
+          ]}
+          style={{ width: "10rem", marginRight: '0.5rem' }}
+          label="QR Type"
+          icon={<Qrcode size={18} strokeWidth={2} />}
+        />
+        <Select
+          value={qrStyle}
+          onChange={(value) => setQrStyle(value as QRStyle)}
+          placeholder="QR Code Style"
+          label="QR Code Style"
+          style={{ width: "10rem", marginLeft: '0.5rem' }}
+          data={[
+            { value: QRStyle.SQUARES, label: "Squares" },
+            { value: QRStyle.DOTS, label: "Dots" },
+          ]}
+          icon={<Qrcode size={18} strokeWidth={2} />}
+        />
+      </Center>
       {conditionalRender(qrType, qrValue, setQrValue)}
       <NumberInput
         value={qrSize}
@@ -153,13 +181,8 @@ const Home: NextPage = () => {
         ]}
         icon={<FaceIdError size={18} strokeWidth={2} />}
       />
-      <div
-        className={classes.colorContainer}
-      >
-        <InputWrapper
-          label="Background color"
-          className={classes.colorWrapper}
-        >
+      <div className={classes.colorContainer}>
+        <InputWrapper label="Background color" className={classes.colorWrapper}>
           <ColorPicker
             value={bgColor}
             onChange={(value) => setBgColor(value)}
@@ -174,18 +197,19 @@ const Home: NextPage = () => {
           />
         </InputWrapper>
       </div>
-      <Center style={{ marginTop: "2rem" }}>
-        <QRCodeCanvas
+      <Center style={{ marginTop: "1rem" }}>
+        <QRCode
           value={qrValue}
           size={qrSize}
-          level={qrError}
+          ecLevel={qrError}
           bgColor={bgColor}
           fgColor={fgColor}
+          qrStyle={qrStyle}
           id="qr-code"
         />
       </Center>
       {/* Download button */}
-      <Center style={{ marginTop: "2rem" }}>
+      <Center style={{ marginTop: "0.75rem" }}>
         <Button
           color="indigo"
           size="md"
