@@ -18,6 +18,7 @@ import {
   Button,
   Title,
   Center,
+  createStyles,
 } from "@mantine/core";
 import { Download, FaceIdError, Qrcode, Resize } from "tabler-icons-react";
 
@@ -65,7 +66,29 @@ function conditionalRender(
       return null;
   }
 }
-// TODO: add different qr code types, like phone number, wifi, etc.
+
+const styles = createStyles((theme) => ({
+  colorContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: '0.25rem',
+
+    '@media (max-width: 440px)': {
+      flexDirection: 'column'
+    }
+  },
+  colorWrapper: {
+    marginRight: '2rem',
+    marginLeft: '2rem',
+
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      margin: 'auto'
+    }
+  }
+})
+)
+
 const Home: NextPage = () => {
   const [qrValue, setQrValue] = useState("Hello, World!");
   const [qrSize, setQrSize] = useState(256);
@@ -76,6 +99,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     setQrValue(``);
   }, [qrType]);
+  const { classes } = styles()
   return (
     <div>
       <Head>
@@ -102,7 +126,7 @@ const Home: NextPage = () => {
           { value: QRTypes.LOCATION, label: "Location" },
           { value: QRTypes.CONTACT, label: "Contact" },
         ]}
-        style={{ width: "20%", margin: "auto", marginTop: "0.5rem" }}
+        style={{ width: "10rem", margin: "auto", marginTop: "0.5rem" }}
         label="QR Type"
         icon={<Qrcode size={18} strokeWidth={2}/>}
       />
@@ -112,7 +136,7 @@ const Home: NextPage = () => {
         onChange={(value) => setQrSize(value!)}
         placeholder="Output size"
         label="Output size"
-        style={{ width: "20%", margin: "auto" }}
+        style={{ width: "16rem", margin: "auto" }}
         icon={<Resize size={18} strokeWidth={2} />}
       />
       <Select
@@ -120,7 +144,7 @@ const Home: NextPage = () => {
         onChange={(value) => setQrError(value as QRErrorCorrectionLevel)}
         placeholder="Error correction"
         label="Error correction"
-        style={{ width: "33.33%", margin: "auto" }}
+        style={{ width: "11rem", margin: "auto" }}
         data={[
           { value: QRErrorCorrectionLevel.LOW, label: "Low" },
           { value: QRErrorCorrectionLevel.MEDIUM, label: "Medium" },
@@ -130,18 +154,11 @@ const Home: NextPage = () => {
         icon={<FaceIdError size={18} strokeWidth={2} />}
       />
       <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "row",
-          marginTop: "1rem",
-        }}
+        className={classes.colorContainer}
       >
         <InputWrapper
           label="Background color"
-          style={{
-            marginRight: "4rem",
-          }}
+          className={classes.colorWrapper}
         >
           <ColorPicker
             value={bgColor}
@@ -149,7 +166,7 @@ const Home: NextPage = () => {
             placeholder="Background color"
           />
         </InputWrapper>
-        <InputWrapper label="Foreground color" style={{ marginLeft: "4rem" }}>
+        <InputWrapper label="Foreground color" className={classes.colorWrapper}>
           <ColorPicker
             value={fgColor}
             onChange={(value) => setFgColor(value)}
