@@ -18,7 +18,7 @@ const PHONE = (props: {
         placeholder="Phone number"
         label="Phone number"
         style={{ width: "12rem" }}
-        icon={<Phone size={18}/>}
+        icon={<Phone size={18} />}
       />
     </Center>
   );

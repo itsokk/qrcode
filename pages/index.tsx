@@ -21,7 +21,15 @@ import {
   createStyles,
   Checkbox,
 } from "@mantine/core";
-import { Download, FaceIdError, Qrcode, Resize } from "tabler-icons-react";
+import {
+  CircleHalf2,
+  Download,
+  FaceIdError,
+  Qrcode,
+  Resize,
+} from "tabler-icons-react";
+import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import DropzoneChildren from "../components/DropzoneChildren";
 
 enum QRErrorCorrectionLevel {
   LOW = "L",
@@ -104,13 +112,18 @@ const Home: NextPage = () => {
   const [qrStyle, setQrStyle] = useState(QRStyle.SQUARES);
   const [qrLogoEnabled, setQrLogoEnabled] = useState(false);
   const [qrLogoImage, setQrLogoImage] = useState(""); // Base64 string
-  const [qrLogoSize, setQrLogoSize] = useState(0);
-  const [qrLogoOpacity, setQrLogoOpacity] = useState(0); // 0-1
+  const [qrLogoSize, setQrLogoSize] = useState(64);
+  const [qrLogoOpacity, setQrLogoOpacity] = useState(0.45); // 0-1
   const [qrLogoRemoveBehind, setQrLogoRemoveBehind] = useState(false);
 
   useEffect(() => {
     setQrValue(``);
   }, [qrType]);
+
+  useEffect(() => {
+    setQrLogoImage(``);
+  }, [qrLogoEnabled]);
+
   const { classes } = styles();
   return (
     <div>
@@ -125,9 +138,7 @@ const Home: NextPage = () => {
       <Title order={1} align="center">
         QR Code Generator
       </Title>
-      <Center
-        style={{ marginTop: "0.25rem", display: "flex", flexDirection: "row" }}
-      >
+      <Center style={{ marginTop: "0.25rem" }}>
         <Select
           value={qrType}
           onChange={(e) => setQrType(e as QRTypes)}
@@ -141,7 +152,7 @@ const Home: NextPage = () => {
             { value: QRTypes.LOCATION, label: "Location" },
             { value: QRTypes.CONTACT, label: "Contact" },
           ]}
-          style={{ width: "10rem", marginRight: '0.5rem' }}
+          style={{ width: "10rem", marginRight: "0.5rem" }}
           label="QR Type"
           icon={<Qrcode size={18} strokeWidth={2} />}
         />
@@ -150,7 +161,7 @@ const Home: NextPage = () => {
           onChange={(value) => setQrStyle(value as QRStyle)}
           placeholder="QR Code Style"
           label="QR Code Style"
-          style={{ width: "10rem", marginLeft: '0.5rem' }}
+          style={{ width: "10rem", marginLeft: "0.5rem" }}
           data={[
             { value: QRStyle.SQUARES, label: "Squares" },
             { value: QRStyle.DOTS, label: "Dots" },
@@ -197,6 +208,60 @@ const Home: NextPage = () => {
           />
         </InputWrapper>
       </div>
+      <Center style={{ marginTop: "0.5rem" }}>
+        <Checkbox
+          checked={qrLogoEnabled}
+          onChange={(e) => setQrLogoEnabled(e.target.checked)}
+          label="Enable logo"
+          color="violet"
+        />
+        {qrLogoEnabled && (
+          <div>
+            <Dropzone
+              onDrop={(acceptedFiles) => {
+                if (acceptedFiles.length > 0) {
+                  // Read the file as a base64 string
+                  const reader = new FileReader();
+                  reader.readAsDataURL(acceptedFiles[0]);
+                  reader.onload = () => {
+                    setQrLogoImage(reader.result as string);
+                  };
+                }
+              }}
+              accept={IMAGE_MIME_TYPE}
+              multiple={false}
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
+              {(status) => DropzoneChildren(status)}
+            </Dropzone>
+            <NumberInput
+              value={qrLogoSize}
+              onChange={(value) => setQrLogoSize(value!)}
+              placeholder="Logo size"
+              label="Logo size"
+              style={{ width: "10rem", marginLeft: "0.5rem" }}
+              icon={<Resize size={18} />}
+            />
+            <NumberInput
+              value={qrLogoOpacity}
+              onChange={(value) => setQrLogoOpacity(value!)}
+              placeholder="Logo opacity"
+              label="Logo opacity"
+              style={{ width: "10rem", marginLeft: "0.5rem" }}
+              icon={<CircleHalf2 size={18} />}
+            />
+            <Checkbox
+              checked={qrLogoRemoveBehind}
+              onChange={(e) => setQrLogoRemoveBehind(e.target.checked)}
+              label="Remove behind"
+              color="violet"
+              style={{ marginLeft: "0.5rem", marginTop: "0.5rem" }}
+            />
+          </div>
+        )}
+      </Center>
       <Center style={{ marginTop: "1rem" }}>
         <QRCode
           value={qrValue}
@@ -205,13 +270,19 @@ const Home: NextPage = () => {
           bgColor={bgColor}
           fgColor={fgColor}
           qrStyle={qrStyle}
+          
+          logoImage={qrLogoImage}
+          logoWidth={qrLogoSize}
+          logoHeight={qrLogoSize}
+          logoOpacity={qrLogoOpacity}
+          removeQrCodeBehindLogo={qrLogoRemoveBehind}
           id="qr-code"
         />
       </Center>
       {/* Download button */}
       <Center style={{ marginTop: "0.75rem" }}>
         <Button
-          color="indigo"
+          color="violet"
           size="md"
           component="a"
           download="qr-code.png"

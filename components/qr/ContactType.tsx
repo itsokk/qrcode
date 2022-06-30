@@ -23,7 +23,7 @@ const CONTACT = (props: {
         placeholder="Name"
         label="Name"
         style={{ width: "16rem" }}
-        icon={<AddressBook size={18}  />}
+        icon={<AddressBook size={18} />}
       />
       <TextInput
         value={number}

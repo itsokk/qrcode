@@ -19,7 +19,7 @@ const SMS = (props: {
         placeholder="Phone number"
         label="Phone number"
         style={{ width: "12rem" }}
-        icon={<Phone size={18}/>}
+        icon={<Phone size={18} />}
       />
       <Textarea
         value={message}
@@ -29,7 +29,7 @@ const SMS = (props: {
         style={{ width: "50%" }}
         autosize
         minRows={4}
-        icon={<Message size={18}/>}
+        icon={<Message size={18} />}
       />
     </Center>
   );
