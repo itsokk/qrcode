@@ -1,5 +1,6 @@
 import { Center, TextInput, Textarea } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Message, Phone } from "tabler-icons-react";
 
 const SMS = (props: {
   setQRValue: (value: string) => void;
@@ -15,9 +16,10 @@ const SMS = (props: {
       <TextInput
         value={phone}
         onChange={(e) => setPhone(e.currentTarget.value)}
-        placeholder="Phone"
-        label="Phone"
+        placeholder="Phone number"
+        label="Phone number"
         style={{ width: "25%" }}
+        icon={<Phone size={18}/>}
       />
       <Textarea
         value={message}
@@ -27,6 +29,7 @@ const SMS = (props: {
         style={{ width: "50%" }}
         autosize
         minRows={4}
+        icon={<Message size={18}/>}
       />
     </Center>
   );

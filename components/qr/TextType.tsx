@@ -1,4 +1,5 @@
 import { Center, TextInput } from "@mantine/core";
+import { FileText } from "tabler-icons-react";
 
 const Text = (props: {
   setQRValue: (value: string) => void;
@@ -12,6 +13,7 @@ const Text = (props: {
         placeholder="Text"
         label="Text"
         style={{ width: "55%" }}
+        icon={<FileText size={18} />}
       />
     </Center>
   );

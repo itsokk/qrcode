@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Center, TextInput } from "@mantine/core";
+import { AddressBook, Home, Mail, Phone } from "tabler-icons-react";
 const CONTACT = (props: {
   setQRValue: (value: string) => void;
   qrValue: string;
@@ -22,6 +23,7 @@ const CONTACT = (props: {
         placeholder="Name"
         label="Name"
         style={{ width: "35%" }}
+        icon={<AddressBook size={18}  />}
       />
       <TextInput
         value={number}
@@ -29,6 +31,7 @@ const CONTACT = (props: {
         placeholder="Number"
         label="Number"
         style={{ width: "35%" }}
+        icon={<Phone size={18} />}
       />
       <TextInput
         value={email}
@@ -36,6 +39,7 @@ const CONTACT = (props: {
         placeholder="Email"
         label="Email"
         style={{ width: "35%" }}
+        icon={<Mail size={18} />}
       />
       <TextInput
         value={address}
@@ -43,6 +47,7 @@ const CONTACT = (props: {
         placeholder="Address"
         label="Address"
         style={{ width: "35%" }}
+        icon={<Home size={18} />}
       />
     </Center>
   );

@@ -1,5 +1,6 @@
 import { Button, Center, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Plane, WorldLatitude, WorldLongitude } from "tabler-icons-react";
 
 const LOC = (props: {
   setQRValue: (value: string) => void;
@@ -37,6 +38,7 @@ const LOC = (props: {
         placeholder="Latitude"
         label="Latitude"
         style={{ width: "25%" }}
+        icon={<WorldLatitude size={18} />}
       />
       <TextInput
         value={lon}
@@ -44,6 +46,7 @@ const LOC = (props: {
         placeholder="Longitude"
         label="Longitude"
         style={{ width: "25%" }}
+        icon={<WorldLongitude size={18} />}
       />
       <TextInput
         value={alt}
@@ -51,6 +54,7 @@ const LOC = (props: {
         placeholder="Altitude"
         label="Altitude"
         style={{ width: "25%" }}
+        icon={<Plane size={18} />}
       />
     </Center>
   );

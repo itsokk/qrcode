@@ -1,5 +1,13 @@
 import { Center, TextInput, Select, Checkbox } from "@mantine/core";
 import { useEffect, useState } from "react";
+import {
+  AccessPoint,
+  Eye,
+  Key,
+  KeyOff,
+  ShieldLock,
+  ShieldOff,
+} from "tabler-icons-react";
 
 enum SECURITY {
   WPA = "WPA",
@@ -30,6 +38,7 @@ const WiFi = (props: {
         placeholder="SSID"
         label="SSID"
         style={{ width: "55%" }}
+        icon={<AccessPoint size={18} />}
       />
       <TextInput
         value={password}
@@ -38,6 +47,9 @@ const WiFi = (props: {
         label="Password"
         style={{ width: "55%" }}
         disabled={security === SECURITY.NONE}
+        icon={
+          security === SECURITY.NONE ? <KeyOff size={18} /> : <Key size={18} />
+        }
       />
       <Select
         value={security}
@@ -49,6 +61,13 @@ const WiFi = (props: {
         ]}
         label="Security"
         style={{ width: "55%" }}
+        icon={
+          security === SECURITY.NONE ? (
+            <ShieldOff size={18} />
+          ) : (
+            <ShieldLock size={18} />
+          )
+        }
       />
       <Checkbox
         value={hidden ? "true" : "false"}

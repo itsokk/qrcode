@@ -1,5 +1,6 @@
 import { Center, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Phone } from "tabler-icons-react";
 
 const PHONE = (props: {
   setQRValue: (value: string) => void;
@@ -14,9 +15,10 @@ const PHONE = (props: {
       <TextInput
         value={phone}
         onChange={(e) => setPhone(e.currentTarget.value)}
-        placeholder="Phone"
-        label="Phone"
+        placeholder="Phone number"
+        label="Phone number"
         style={{ width: "25%" }}
+        icon={<Phone size={18}/>}
       />
     </Center>
   );

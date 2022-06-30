@@ -1,5 +1,6 @@
 import { Center, TextInput } from "@mantine/core";
 import { useState, useEffect } from "react";
+import { Link } from "tabler-icons-react";
 
 const URL = (props: {
   setQRValue: (value: string) => void;
@@ -21,6 +22,7 @@ const URL = (props: {
         placeholder="URL"
         label="URL"
         style={{ width: "55%" }}
+        icon={<Link size={18} />}
       />
     </Center>
   );

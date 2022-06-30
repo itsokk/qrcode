@@ -1,7 +1,7 @@
 import { Center, Textarea, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
-
-const Mail = (props: {
+import { Mail, Mailbox, Message } from "tabler-icons-react";
+const _Mail = (props: {
   setQRValue: (value: string) => void;
   qrValue: string;
 }) => {
@@ -19,6 +19,7 @@ const Mail = (props: {
         placeholder="Email"
         label="Email"
         style={{ width: "25%" }}
+        icon={<Mail size={18} />}
       />
       <TextInput
         value={subject}
@@ -26,6 +27,7 @@ const Mail = (props: {
         placeholder="Subject"
         label="Subject"
         style={{ width: "25%" }}
+        icon={<Mailbox size={18} />}
       />
       <Textarea
         value={body}
@@ -35,9 +37,10 @@ const Mail = (props: {
         style={{ width: "50%" }}
         autosize
         minRows={4}
+        icon={<Message size={18} />}
       />
     </Center>
   );
 };
 
-export default Mail;
+export default _Mail;
