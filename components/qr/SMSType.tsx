@@ -18,7 +18,7 @@ const SMS = (props: {
         onChange={(e) => setPhone(e.currentTarget.value)}
         placeholder="Phone number"
         label="Phone number"
-        style={{ width: "25%" }}
+        style={{ width: "12rem" }}
         icon={<Phone size={18}/>}
       />
       <Textarea

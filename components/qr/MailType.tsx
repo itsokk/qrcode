@@ -18,7 +18,7 @@ const _Mail = (props: {
         onChange={(e) => setEmail(e.currentTarget.value)}
         placeholder="Email"
         label="Email"
-        style={{ width: "25%" }}
+        style={{ width: "16rem" }}
         icon={<Mail size={18} />}
       />
       <TextInput
@@ -26,7 +26,7 @@ const _Mail = (props: {
         onChange={(e) => setSubject(e.currentTarget.value)}
         placeholder="Subject"
         label="Subject"
-        style={{ width: "25%" }}
+        style={{ width: "16rem" }}
         icon={<Mailbox size={18} />}
       />
       <Textarea
@@ -34,7 +34,7 @@ const _Mail = (props: {
         onChange={(e) => setBody(e.currentTarget.value)}
         placeholder="Body"
         label="Body"
-        style={{ width: "50%" }}
+        style={{ width: "65%" }}
         autosize
         minRows={4}
         icon={<Message size={18} />}

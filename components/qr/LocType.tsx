@@ -37,7 +37,7 @@ const LOC = (props: {
         onChange={(e) => setLat(e.currentTarget.value)}
         placeholder="Latitude"
         label="Latitude"
-        style={{ width: "25%" }}
+        style={{ width: "12rem" }}
         icon={<WorldLatitude size={18} />}
       />
       <TextInput
@@ -45,7 +45,7 @@ const LOC = (props: {
         onChange={(e) => setLon(e.currentTarget.value)}
         placeholder="Longitude"
         label="Longitude"
-        style={{ width: "25%" }}
+        style={{ width: "12rem" }}
         icon={<WorldLongitude size={18} />}
       />
       <TextInput
@@ -53,7 +53,7 @@ const LOC = (props: {
         onChange={(e) => setAlt(e.currentTarget.value)}
         placeholder="Altitude"
         label="Altitude"
-        style={{ width: "25%" }}
+        style={{ width: "12rem" }}
         icon={<Plane size={18} />}
       />
     </Center>

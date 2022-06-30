@@ -22,7 +22,7 @@ const CONTACT = (props: {
         onChange={(e) => setName(e.currentTarget.value)}
         placeholder="Name"
         label="Name"
-        style={{ width: "35%" }}
+        style={{ width: "16rem" }}
         icon={<AddressBook size={18}  />}
       />
       <TextInput
@@ -30,7 +30,7 @@ const CONTACT = (props: {
         onChange={(e) => setNumber(e.currentTarget.value)}
         placeholder="Number"
         label="Number"
-        style={{ width: "35%" }}
+        style={{ width: "16rem" }}
         icon={<Phone size={18} />}
       />
       <TextInput
@@ -38,7 +38,7 @@ const CONTACT = (props: {
         onChange={(e) => setEmail(e.currentTarget.value)}
         placeholder="Email"
         label="Email"
-        style={{ width: "35%" }}
+        style={{ width: "16rem" }}
         icon={<Mail size={18} />}
       />
       <TextInput
@@ -46,7 +46,7 @@ const CONTACT = (props: {
         onChange={(e) => setAddress(e.currentTarget.value)}
         placeholder="Address"
         label="Address"
-        style={{ width: "35%" }}
+        style={{ width: "16rem" }}
         icon={<Home size={18} />}
       />
     </Center>
