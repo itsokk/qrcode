@@ -10,6 +10,7 @@ import PhoneType from "../components/qr/PhoneType";
 import WiFiType from "../components/qr/WiFiType";
 import LocType from "../components/qr/LocType";
 import ContactType from "../components/qr/ContactType";
+import ThemeToggle from "../components/ThemeToggle";
 import {
   NumberInput,
   Select,
@@ -126,7 +127,7 @@ const Home: NextPage = () => {
 
   const { classes } = styles();
   return (
-    <div>
+    <>
       <Head>
         <title>QR Code Generator</title>
         <link rel="icon" href="/favicon.ico" />
@@ -270,7 +271,6 @@ const Home: NextPage = () => {
           bgColor={bgColor}
           fgColor={fgColor}
           qrStyle={qrStyle}
-          
           logoImage={qrLogoImage}
           logoWidth={qrLogoSize}
           logoHeight={qrLogoSize}
@@ -298,7 +298,15 @@ const Home: NextPage = () => {
           Download as PNG
         </Button>
       </Center>
-    </div>
+      <Center
+        style={{
+          marginBottom: "0.25rem",
+          marginTop: "0.75rem",
+        }}
+      >
+        <ThemeToggle />
+      </Center>
+    </>
   );
 };
 
