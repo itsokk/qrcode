@@ -1,8 +1,7 @@
-import { Center, TextInput, Select, Checkbox } from "@mantine/core";
+import { Center, TextInput, Select, Checkbox, PasswordInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import {
   AccessPoint,
-  Eye,
   Key,
   KeyOff,
   ShieldLock,
@@ -40,7 +39,7 @@ const WiFi = (props: {
         style={{ width: "55%" }}
         icon={<AccessPoint size={18} />}
       />
-      <TextInput
+      <PasswordInput
         value={password}
         onChange={(e) => setPassword(e.currentTarget.value)}
         placeholder="Password"
