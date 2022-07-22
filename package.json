@@ -14,12 +14,12 @@
     "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^4.2.12",
     "babel-loader": "^8.2.5",
-    "next": "12.2.2",
+    "next": "12.2.3",
     "next-pwa": "^5.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-qrcode-logo": "^2.7.0",
-    "tabler-icons-react": "^1.52.0",
+    "tabler-icons-react": "^1.53.0",
     "webpack": "^5.73.0"
   },
   "devDependencies": {
