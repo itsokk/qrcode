@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@babel/core": "^7.18.9",
+    "@babel/core": "^7.18.10",
     "@mantine/core": "^4.2.11",
     "@mantine/dropzone": "^4.2.12",
     "@mantine/hooks": "^4.2.11",
