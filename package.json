@@ -14,7 +14,7 @@
     "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^5.2.0",
     "babel-loader": "^8.2.5",
-    "next": "12.2.3",
+    "next": "12.3.0",
     "next-pwa": "^5.5.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
