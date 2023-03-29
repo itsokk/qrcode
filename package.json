@@ -20,7 +20,7 @@
     "react-dom": "18.2.0",
     "react-qrcode-logo": "^2.7.0",
     "tabler-icons-react": "^1.54.0",
-    "webpack": "^5.74.0"
+    "webpack": "^5.77.0"
   },
   "devDependencies": {
     "@types/node": "18.7.2",
